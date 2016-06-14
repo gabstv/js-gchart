@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>Gabs Charts</title>
+<style>
+
+</style>
+</head>
+<body>
+<script src="pixi.min.js"></script>
+<script src="../src/gchart.js"></script>
+<script>/* the window.onload is ABSOLUTELY essential, otherwise opening and closing Iframes does not work;*/ 
+window.onload = function(){
+	var renderer = PIXI.autoDetectRenderer(800, 600,{
+		backgroundColor : 0xeeeeee, antialias: true
+	});
+document.body.appendChild(renderer.view);
+
+// create the root of the scene graph
+var stage = new PIXI.Container();
+
+var gc = new gchart.LineChart(800,600);
+
+stage.addChild(gc.container);
+
+gc.maxY = 100;
+gc.minX = 1;
+gc.maxX = 9;
+
+var l = new gchart.LineChartLine();
+l.push(1,15);
+l.push(2,80);
+l.push(3,50);
+l.push(4,55);
+l.push(5,55);
+l.push(6,-1);
+l.push(7,99);
+l.push(8,22);
+l.push(9,33);
+gc.addLine(l);
+
+gc.guideYCFG.labels = [
+	[20, "20.000"],
+	[50, "$50$"],
+	[90, "90!"]
+];
+gc.guideXCFG.quantity = 8;
+
+gc.update(true);
+
+// start animating
+animate();
+function animate() {
+    requestAnimationFrame(animate);
+
+    // just for fun, let's rotate mr rabbit a little
+    //bunny.rotation += 0.1;
+
+    // render the container
+    renderer.render(stage);
+}
+
+//setInterval(function(){
+//	for(var i = 0; i < l.points.length; i++){
+//		l.points[i].pos.x -= 0.5;
+//	}
+//	//if(Math.random() > 0.8){
+//		var y = Math.random() * 100;
+//		l.push(100,y);
+//	//}
+//	if(l.points[0].pos.x < -100){
+//		l.points.shift();
+//	}
+//	gc.update();
+//},25);
+console.log(gc.container);
+}
+</script>
+</body>
+</html>
